@@ -27,7 +27,7 @@ class EquationGenerator implements IEquationGenerator {
       final buffer = StringBuffer();
       int currentResult = 0;
 
-      int length = 2 + (correctAnswers ~/ 5);
+      int length = 2 + (correctAnswers ~/ 5); //expression lengthens by 1 every 5 right answers
       for (int i = 0; i < length; i++) {
         int num = _random.nextInt(3) + 1;
         String operator = _random.nextBool() ? '+' : '-';
