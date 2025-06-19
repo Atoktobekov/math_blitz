@@ -109,11 +109,13 @@ class GameScreen extends StatelessWidget {
 
   void _showGameOverDialog(
       BuildContext context,
+
       int points,
       VoidCallback onRestart,
       ) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (_) => AlertDialog(
         title: Text('Вы проиграли!'),
         content: Text('Ваш счёт: $points'),
