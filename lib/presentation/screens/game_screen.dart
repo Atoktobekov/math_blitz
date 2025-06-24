@@ -31,7 +31,7 @@ class GameScreen extends StatelessWidget {
 
             return Stack(
               children: [
-                // Игра
+                // The game
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(16),

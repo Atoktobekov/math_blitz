@@ -22,19 +22,7 @@ class GameViewModel extends ChangeNotifier {
   double timeLeftPercent = 1.0;
   bool isGameOver = false;
 
-  GameViewModel() {}
 
-  void generateNewEquation() {
-    _timer?.cancel();
-    isGameOver = false;
-    timeLeftPercent = 1.0;
-
-    currentEquation = _equationGenerator.generate(score);
-    options = [1, 2, 3];
-
-    _startTimer();
-    notifyListeners();
-  }
   void startGame() {
     points = 0;
     score = 0;
@@ -43,6 +31,18 @@ class GameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void generateNewEquation() {
+    _timer?.cancel();
+    isGameOver = false;
+    timeLeftPercent = 1.0;
+
+    currentEquation = _equationGenerator.generate(score);
+    print(currentEquation?.correctAnswer);
+    options = [1, 2, 3];
+
+    _startTimer();
+    notifyListeners();
+  }
 
   void _startTimer() {
     const tick = Duration(milliseconds: 100);
