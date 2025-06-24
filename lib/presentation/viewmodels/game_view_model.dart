@@ -71,7 +71,14 @@ class GameViewModel extends ChangeNotifier {
 
     if (correct) {
       score++;
-      points+= 1 * score * (rand.nextInt(score+1) +1);
+
+      const base = 10.0;
+      final speedMultiplier = timeLeftPercent.clamp(0.1, 1.0);
+      final randomFactor = 0.9 + rand.nextDouble() * 0.2;
+
+      final earned = ((score + 1) * base * speedMultiplier * randomFactor).round();
+      points += earned;
+
       generateNewEquation();
     } else {
       _handleGameOver();
