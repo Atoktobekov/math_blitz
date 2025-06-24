@@ -24,6 +24,12 @@ class GameViewModel extends ChangeNotifier {
   double timeLeftPercent = 1.0;
   bool isGameOver = false;
 
+  static const int tickMs = 100;
+  late final int totalTicks = maxTimeSeconds * 1000 ~/ tickMs;
+
+  int elapsedTicks = 0; // ← следим за прошедшими тиками
+
+
 
   void startGame() {
     points = 0;
@@ -36,34 +42,36 @@ class GameViewModel extends ChangeNotifier {
   void pauseGame() {
     if (isPaused || isGameOver) return;
     isPaused = true;
-    _timer?.cancel();
+    _timer?.cancel(); // сохраняем elapsedTicks, не сбрасываем
     notifyListeners();
   }
+
 
   void resumeGame() {
     if (!isPaused || isGameOver) return;
     isPaused = false;
-    _startTimer(fromTicks: _remainingTicks);
+    _startTimer(); // продолжает от текущего elapsedTicks
     notifyListeners();
   }
+
 
   void generateNewEquation() {
     _timer?.cancel();
     isGameOver = false;
+    isPaused = false;
+    elapsedTicks = 0; // ← СБРОС перед началом нового примера
     timeLeftPercent = 1.0;
 
     currentEquation = _equationGenerator.generate(score);
-    print(currentEquation?.correctAnswer);
     options = [1, 2, 3];
 
     _startTimer();
     notifyListeners();
   }
 
-  void _startTimer({int fromTicks = 0}) {
-    const tick = Duration(milliseconds: 100);
-    final totalTicks = maxTimeSeconds * 1000 ~/ tick.inMilliseconds;
-    int elapsedTicks = fromTicks;
+
+  void _startTimer() {
+    const tick = Duration(milliseconds: tickMs);
 
     _timer = Timer.periodic(tick, (timer) {
       elapsedTicks++;
@@ -77,9 +85,6 @@ class GameViewModel extends ChangeNotifier {
 
       notifyListeners();
     });
-
-    // Сохраняем текущие тики
-    _remainingTicks = elapsedTicks;
   }
 
 
