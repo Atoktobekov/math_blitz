@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_blitz/presentation/widgets/PauseOverlay.dart';
 import 'package:provider/provider.dart';
 import 'package:math_blitz/presentation/viewmodels/game_view_model.dart';
 import 'package:math_blitz/presentation/widgets/answerButton.dart';
@@ -17,7 +18,19 @@ class GameScreen extends StatelessWidget {
               fontSize: 28,
               fontWeight: FontWeight.w400,
             ),
-            )
+            ),
+          actions: [
+            Consumer<GameViewModel>(
+              builder: (context, vm, _) => IconButton(
+                icon: Icon(Icons.pause, color: Colors.black, size: 35,),
+                onPressed: () {
+                  if (!vm.isPaused && vm.hasStarted && !vm.isGameOver) {
+                    vm.pauseGame();
+                  }
+                },
+              ),
+            ),
+          ],
         ),
         body: Consumer<GameViewModel>(
           builder: (context, vm, _) {
@@ -28,10 +41,9 @@ class GameScreen extends StatelessWidget {
                 _showGameOverDialog(context, vm.points, vm.resetGame);
               }
             });
-
             return Stack(
               children: [
-                // The game
+                // Основной игровой экран
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -67,7 +79,13 @@ class GameScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Затемнение + кнопка "Начать"
+                // Экран паузы, если игра на паузе
+                if (vm.isPaused)
+                  PauseOverlay(
+                    onResume: () => vm.resumeGame(),
+                  ),
+
+                // Затемнение и кнопка "Начать", если игра не началась
                 if (!vm.hasStarted)
                   Positioned.fill(
                     child: Container(
@@ -94,12 +112,12 @@ class GameScreen extends StatelessWidget {
                             child: const Text('НАЧАТЬ'),
                           ),
                         ),
-
                       ),
                     ),
                   ),
               ],
             );
+
 
           },
         ),

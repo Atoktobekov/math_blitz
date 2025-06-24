@@ -12,8 +12,10 @@ class GameViewModel extends ChangeNotifier {
   final rand = Random();
 
   bool hasStarted = false;
+  bool isPaused = false;
   int score = 0;
   int points = 0;
+  int _remainingTicks = 0;
   Equation? currentEquation;
   List<int> options = [];
   Timer? _timer;
@@ -31,6 +33,20 @@ class GameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void pauseGame() {
+    if (isPaused || isGameOver) return;
+    isPaused = true;
+    _timer?.cancel();
+    notifyListeners();
+  }
+
+  void resumeGame() {
+    if (!isPaused || isGameOver) return;
+    isPaused = false;
+    _startTimer(fromTicks: _remainingTicks);
+    notifyListeners();
+  }
+
   void generateNewEquation() {
     _timer?.cancel();
     isGameOver = false;
@@ -44,10 +60,10 @@ class GameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _startTimer() {
+  void _startTimer({int fromTicks = 0}) {
     const tick = Duration(milliseconds: 100);
     final totalTicks = maxTimeSeconds * 1000 ~/ tick.inMilliseconds;
-    int elapsedTicks = 0;
+    int elapsedTicks = fromTicks;
 
     _timer = Timer.periodic(tick, (timer) {
       elapsedTicks++;
@@ -61,7 +77,11 @@ class GameViewModel extends ChangeNotifier {
 
       notifyListeners();
     });
+
+    // Сохраняем текущие тики
+    _remainingTicks = elapsedTicks;
   }
+
 
   void answerSelected(int selected) {
     if (currentEquation == null || isGameOver) return;
