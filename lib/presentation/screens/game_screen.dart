@@ -85,7 +85,7 @@ class GameScreen extends StatelessWidget {
                     onResume: () => vm.resumeGame(),
                   ),
 
-                // Затемнение и кнопка "Начать", если игра не началась
+                //Затемнение и кнопка "Начать", если игра не началась
                 if (!vm.hasStarted)
                   Positioned.fill(
                     child: Container(
