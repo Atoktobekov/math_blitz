@@ -35,6 +35,13 @@ The app follows the MVVM (Model-View-ViewModel) pattern:
 - 📊 Implement difficulty levels
 - 🌍 Localization for multiple languages
 
-## License
+## 📸 Screenshots
+
+![image1](https://github.com/Atoktobekov/math_blitz/blob/main/screenshots/math_blitz%20(1).png)
+![image2](https://github.com/Atoktobekov/math_blitz/blob/main/screenshots/math_blitz%20(2).png)
+![image3](https://github.com/Atoktobekov/math_blitz/blob/main/screenshots/math_blitz%20(3).png)
+
+
+## 📜 License
 
 MIT License © [Atoktobekov](https://github.com/Atoktobekov)  
