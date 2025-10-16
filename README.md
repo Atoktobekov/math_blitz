@@ -37,9 +37,11 @@ The app follows the MVVM (Model-View-ViewModel) pattern:
 
 ## 📸 Screenshots
 
-![image1](https://github.com/Atoktobekov/math_blitz/blob/main/screenshots/math_blitz%20(1).png)
-![image2](https://github.com/Atoktobekov/math_blitz/blob/main/screenshots/math_blitz%20(2).png)
-![image3](https://github.com/Atoktobekov/math_blitz/blob/main/screenshots/math_blitz%20(3).png)
+<p align="center">
+  <img src="screenshots/math_blitz (1).png" width="30%">
+  <img src="screenshots/math_blitz (2).png" width="30%">
+  <img src="screenshots/math_blitz (3).png" width="30%">
+</p>
 
 
 ## 📜 License
